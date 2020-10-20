@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { HistoricalStandings } from './components/HistoricalStandings';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Matchup } from './components/Matchup';
+import { NavBar } from './components/NavBar';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Standings } from './components/Standings';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <NavBar/>
+      <Switch>
+        <Route path="/Matchups">
+          <Matchup/>
+        </Route>
+        <Route path="/Managers">
+          <div/>
+        </Route>
+        <Route path="/Drafts">
+          <div/>
+        </Route>
+        <Route path="/Standings">
+          <Standings/>
+        </Route>
+        <Route path="/">
+          <HistoricalStandings/>
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
