@@ -468,7 +468,7 @@ export const DraftResultsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        draftResult(managerId?: string, year: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<DraftResult>> {
+        draftResult(managerId: string, year: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<DraftResult>> {
             const localVarFetchArgs = DraftResultsApiFetchParamCreator(configuration).draftResult(managerId, year, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {

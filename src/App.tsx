@@ -5,6 +5,7 @@ import { Matchup } from './components/Matchup';
 import { NavBar } from './components/NavBar';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Standings } from './components/Standings';
+import { About } from './components/About';
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
         </Route>
         <Route path="/Standings">
           <Standings/>
+        </Route>
+        <Route path="/About">
+          <About/>
         </Route>
         <Route path="/">
           <HistoricalStandings/>
