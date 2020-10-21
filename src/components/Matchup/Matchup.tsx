@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
-import { StandingsApiFp, HistoricalStanding } from '../client';
+import { StandingsApiFp, HistoricalStanding } from '../../client';
 import { MatchupHistory } from './MatchupHistory';
 
 export const Matchup = () => {

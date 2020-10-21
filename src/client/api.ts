@@ -90,7 +90,7 @@ export interface DraftResult {
      * @type {string}
      * @memberof DraftResult
      */
-    managerId?: string;
+    managerId: string;
     /**
      * 
      * @type {string}
@@ -132,7 +132,7 @@ export interface DraftResult {
      * @type {string}
      * @memberof DraftResult
      */
-    seasonPoints?: string;
+    pointsScored?: string;
     /**
      * 
      * @type {number}
@@ -226,7 +226,7 @@ export interface MatchupDetail {
      * @type {string}
      * @memberof MatchupDetail
      */
-    selectedPosition?: string;
+    selectedPosition: string;
     /**
      * 
      * @type {string}
@@ -451,6 +451,35 @@ export const DraftResultsApiFetchParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Returns the draft results for a year and manager
+         * @summary Find draft results
+         * @param {string} year Fantasy Football year
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        draftResultForYear(year: string, options: any = {}): FetchArgs {
+            // verify required parameter 'year' is not null or undefined
+            if (year === null || year === undefined) {
+                throw new RequiredError('year','Required parameter year was null or undefined when calling draftResultForYear.');
+            }
+            const localVarPath = `/draft/{year}`
+                .replace(`{${"year"}}`, encodeURIComponent(String(year)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -470,6 +499,25 @@ export const DraftResultsApiFp = function(configuration?: Configuration) {
          */
         draftResult(managerId: string, year: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<DraftResult>> {
             const localVarFetchArgs = DraftResultsApiFetchParamCreator(configuration).draftResult(managerId, year, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+                /**
+         * Returns the draft results for a year and manager
+         * @summary Find draft results
+         * @param {string} year Fantasy Football year
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        draftResultForYear(year: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<DraftResult>> {
+            const localVarFetchArgs = DraftResultsApiFetchParamCreator(configuration).draftResultForYear(year, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -500,6 +548,16 @@ export const DraftResultsApiFactory = function (configuration?: Configuration, f
         draftResult(managerId: string, year: string, options?: any) {
             return DraftResultsApiFp(configuration).draftResult(managerId, year, options)(fetch, basePath);
         },
+                /**
+         * Returns the draft results for a year and manager
+         * @summary Find draft results
+         * @param {string} year Fantasy Football year
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        draftResultForYear(year: string, options?: any) {
+            return DraftResultsApiFp(configuration).draftResultForYear(year, options)(fetch, basePath);
+        },
     };
 };
 
@@ -523,6 +581,17 @@ export class DraftResultsApi extends BaseAPI {
         return DraftResultsApiFp(this.configuration).draftResult(managerId, year, options)(this.fetch, this.basePath);
     }
 
+        /**
+     * Returns the draft results for a year and manager
+     * @summary Find draft results
+     * @param {string} year Fantasy Football year
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DraftResultsApi
+     */
+    public draftResultForYear(year: string, options?: any) {
+        return DraftResultsApiFp(this.configuration).draftResultForYear(year, options)(this.fetch, this.basePath);
+    }
 }
 
 /**

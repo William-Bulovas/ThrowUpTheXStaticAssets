@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { MatchupDetail, MatchupsApiFp } from '../client';
+import { MatchupDetail, MatchupsApiFp } from '../../client';
 
 interface Props {
     managerIdA: string,
@@ -30,7 +30,7 @@ export const MatchupDetails = (props: Props) => {
         <div className="row">
             <div className="col">
                 <div className="row"><h5>{props.managerNameA} :</h5></div>
-                <table className="table table-dark">
+                <table className="table table-striped table-dark table-hover table-responsive-sm">
                     <thead>
                         <tr>
                             <th scope="col">Player</th>
@@ -51,7 +51,7 @@ export const MatchupDetails = (props: Props) => {
             </div>
             <div className="col">
                 <div className="row"><h5>{props.managerNameB} :</h5></div>
-                <table className="table table-dark">
+                <table className="table table-striped table-dark table-hover table-responsive-sm">
                     <thead>
                         <tr>
                             <th scope="col">Points</th>
@@ -74,69 +74,23 @@ export const MatchupDetails = (props: Props) => {
     );
 }
 
+const sortOrder = [
+    'QB',
+    'RB',
+    'WR',
+    'W/R/T',
+    'TE',
+    'K',
+    'DEF',
+    'BN',
+    'IR'
+]
+
 const detailSorter = (detail1: MatchupDetail, detail2: MatchupDetail) => {
-    if (detail1.selectedPosition == 'QB') {
-        return -1;
-    }
-
-    if (detail2.selectedPosition == 'QB') {
+    if (sortOrder.indexOf(detail1.selectedPosition) > sortOrder.indexOf(detail2.selectedPosition)) {
         return 1;
-    }
-
-    if (detail1.selectedPosition == 'RB') {
+    } else if (sortOrder.indexOf(detail1.selectedPosition) > sortOrder.indexOf(detail2.selectedPosition)) {
         return -1;
-    }
-
-    if (detail2.selectedPosition == 'RB') {
-        return 1;
-    }
-
-    if (detail1.selectedPosition == 'WR') {
-        return -1;
-    }
-
-    if (detail2.selectedPosition == 'WR') {
-        return 1;
-    }
-
-    if (detail1.selectedPosition == 'W/R/T') {
-        return -1;
-    }
-
-    if (detail2.selectedPosition == 'W/R/T') {
-        return 1;
-    }
-
-    if (detail1.selectedPosition == 'TE') {
-        return -1;
-    }
-
-    if (detail2.selectedPosition == 'TE') {
-        return 1;
-    }
-
-    if (detail1.selectedPosition == 'K') {
-        return -1;
-    }
-
-    if (detail2.selectedPosition == 'K') {
-        return 1;
-    }
-    
-    if (detail1.selectedPosition == 'DEF') {
-        return -1;
-    }
-
-    if (detail2.selectedPosition == 'DEF') {
-        return 1;
-    }
-
-    if (detail1.selectedPosition == 'BN') {
-        return -1;
-    }
-
-    if (detail2.selectedPosition == 'BN') {
-        return 1;
     }
 
     return 0;

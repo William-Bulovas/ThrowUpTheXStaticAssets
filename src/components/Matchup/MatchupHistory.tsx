@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MatchupOverview, MatchupsApiFp, MatchupTeamOverview } from '../client';
+import { MatchupOverview, MatchupsApiFp, MatchupTeamOverview } from '../../client';
 import { MatchupHistoryRow } from './MatchupHistoryRow';
 
 interface Props {
@@ -57,7 +57,7 @@ export const MatchupHistory = (props: Props) => {
             <h5 className="mb-3 d-flex justify-content-center">
                 Overall Record: {props.managerName1} {getRecord(props.managerId1)} vs {props.managerName2} {getRecord(props.managerId2)}
             </h5>
-            <table className="table table-dark">
+            <table className="table table-striped table-dark table-responsive-sm">
                 <thead>
                     <tr>
                         <th scope="col">Year</th>

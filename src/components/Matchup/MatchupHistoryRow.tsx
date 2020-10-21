@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MatchupOverview } from '../client';
+import { MatchupOverview } from '../../client';
 import { MatchupDetails } from './MatchupDetails';
 
 interface Props {

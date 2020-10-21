@@ -1,7 +1,8 @@
 import React from 'react';
 import { HistoricalStandings } from './components/HistoricalStandings';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Matchup } from './components/Matchup';
+import { Matchup } from './components/Matchup/Matchup';
+import { Draft } from './components/Draft/Draft';
 import { NavBar } from './components/NavBar';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Standings } from './components/Standings';
@@ -19,7 +20,7 @@ function App() {
           <div/>
         </Route>
         <Route path="/Drafts">
-          <div/>
+          <Draft/>
         </Route>
         <Route path="/Standings">
           <Standings/>
