@@ -150,7 +150,7 @@ export interface DraftResult {
      * @type {number}
      * @memberof DraftResult
      */
-    year?: number;
+    year: number;
 }
 
 /**
@@ -454,6 +454,35 @@ export const DraftResultsApiFetchParamCreator = function (configuration?: Config
         /**
          * Returns the draft results for a year and manager
          * @summary Find draft results
+         * @param {string} manager Fantasy Football year
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        draftResultForManager(manager: string, options: any = {}): FetchArgs {
+            // verify required parameter 'manager' is not null or undefined
+            if (manager === null || manager === undefined) {
+                throw new RequiredError('manager','Required parameter manager was null or undefined when calling draftResultForManager.');
+            }
+            const localVarPath = `/draftForManager/{manager}`
+                .replace(`{${"manager"}}`, encodeURIComponent(String(manager)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the draft results for a year and manager
+         * @summary Find draft results
          * @param {string} year Fantasy Football year
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -509,7 +538,26 @@ export const DraftResultsApiFp = function(configuration?: Configuration) {
                 });
             };
         },
-                /**
+        /**
+         * Returns the draft results for a year and manager
+         * @summary Find draft results
+         * @param {string} manager Fantasy Football year
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        draftResultForManager(manager: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<DraftResult>> {
+            const localVarFetchArgs = DraftResultsApiFetchParamCreator(configuration).draftResultForManager(manager, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
          * Returns the draft results for a year and manager
          * @summary Find draft results
          * @param {string} year Fantasy Football year
@@ -548,7 +596,17 @@ export const DraftResultsApiFactory = function (configuration?: Configuration, f
         draftResult(managerId: string, year: string, options?: any) {
             return DraftResultsApiFp(configuration).draftResult(managerId, year, options)(fetch, basePath);
         },
-                /**
+        /**
+         * Returns the draft results for a year and manager
+         * @summary Find draft results
+         * @param {string} manager Fantasy Football year
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        draftResultForManager(manager: string, options?: any) {
+            return DraftResultsApiFp(configuration).draftResultForManager(manager, options)(fetch, basePath);
+        },
+        /**
          * Returns the draft results for a year and manager
          * @summary Find draft results
          * @param {string} year Fantasy Football year
@@ -580,8 +638,18 @@ export class DraftResultsApi extends BaseAPI {
     public draftResult(managerId: string, year: string, options?: any) {
         return DraftResultsApiFp(this.configuration).draftResult(managerId, year, options)(this.fetch, this.basePath);
     }
-
-        /**
+    /**
+     * Returns the draft results for a year and manager
+     * @summary Find draft results
+     * @param {string} manager Fantasy Football year
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DraftResultsApi
+     */
+    public draftResultForManager(manager: string, options?: any) {
+        return DraftResultsApiFp(this.configuration).draftResultForManager(manager, options)(this.fetch, this.basePath);
+    }
+    /**
      * Returns the draft results for a year and manager
      * @summary Find draft results
      * @param {string} year Fantasy Football year
@@ -866,6 +934,35 @@ export const StandingsApiFetchParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+                /**
+         * Find standings for a given year
+         * @summary Find standings for a year
+         * @param {string} manager Fantasy Football year
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        standingsForManager(manager: string, options: any = {}): FetchArgs {
+            // verify required parameter 'manager' is not null or undefined
+            if (manager === null || manager === undefined) {
+                throw new RequiredError('manager','Required parameter manager was null or undefined when calling standingsForManager.');
+            }
+            const localVarPath = `/standingForManager/{manager}`
+                .replace(`{${"manager"}}`, encodeURIComponent(String(manager)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -912,6 +1009,25 @@ export const StandingsApiFp = function(configuration?: Configuration) {
                 });
             };
         },
+                /**
+         * Find standings for a given year
+         * @summary Find standings for a year
+         * @param {string} manager Fantasy Football year
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        standingsForManager(manager: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Standing>> {
+            const localVarFetchArgs = StandingsApiFetchParamCreator(configuration).standingsForManager(manager, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
     }
 };
 
@@ -939,6 +1055,16 @@ export const StandingsApiFactory = function (configuration?: Configuration, fetc
          */
         standings(year: string, options?: any) {
             return StandingsApiFp(configuration).standings(year, options)(fetch, basePath);
+        },
+                /**
+         * Find standings for a given year
+         * @summary Find standings for a year
+         * @param {string} manager Fantasy Football year
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        standingsForManager(manager: string, options?: any) {
+            return StandingsApiFp(configuration).standingsForManager(manager, options)(fetch, basePath);
         },
     };
 };
@@ -972,6 +1098,16 @@ export class StandingsApi extends BaseAPI {
     public standings(year: string, options?: any) {
         return StandingsApiFp(this.configuration).standings(year, options)(this.fetch, this.basePath);
     }
-
+    /**
+     * Find standings for a given year
+     * @summary Find standings for a year
+     * @param {string} manager Fantasy Football year
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StandingsApi
+     */
+    public standingsForManager(manager: string, options?: any) {
+        return StandingsApiFp(this.configuration).standingsForManager(manager, options)(this.fetch, this.basePath);
+    }
 }
 

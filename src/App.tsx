@@ -4,9 +4,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Matchup } from './components/Matchup/Matchup';
 import { Draft } from './components/Draft/Draft';
 import { NavBar } from './components/NavBar';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import { Standings } from './components/Standings';
 import { About } from './components/About';
+import { Managers } from './components/Managers/Managers';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Matchup/>
         </Route>
         <Route path="/Managers">
-          <div/>
+          <Managers/>
         </Route>
         <Route path="/Drafts">
           <Draft/>
