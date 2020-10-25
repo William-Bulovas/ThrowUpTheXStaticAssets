@@ -17,6 +17,9 @@ function App() {
         <Route path="/Matchups">
           <Matchup/>
         </Route>
+        <Route path="/Historical">
+          <HistoricalStandings/>
+        </Route>
         <Route path="/Managers">
           <Managers/>
         </Route>

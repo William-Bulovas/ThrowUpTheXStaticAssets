@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Dropdown } from 'react-bootstrap';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { StandingsApiFp, HistoricalStanding } from '../../client';
 import { ManagerDetails } from './ManagerDetails';
 import { ManagersSideBar } from './ManagersSideBar';
+import { MobileManagerSelector } from './MobileManagerSelector';
 
 enum StandingsView {
     AGGREGATE,
@@ -21,21 +23,25 @@ export const Managers = () => {
     return (
         <div className="container-fluid mt-3">
             <div className="row">
-                    <div className="col-sm-2">
-                        <ManagersSideBar overallStandings={standings}/>
-                    </div>
-                    <div className="col-sm-10">
-                        <Switch>
-                            {standings.map(standing => 
-                                <Route path={path + '/' + standing.manager}>
-                                        <ManagerDetails standing={standing}/>
-                                </Route>
-                            )}
-                            <Route path='/'>
-                                    <h4>Manager</h4>
+                <div className="bg-light d-none d-sm-block col-md-2">
+                    <ManagersSideBar overallStandings={standings}/>
+                </div>
+                <div className="col-md-10">
+                    <Switch>
+                        {standings.map(standing => 
+                            <Route path={path + '/' + standing.managerId}>
+                                    <MobileManagerSelector standings={standings} 
+                                        selectedManagerName={standing.manager}/>
+                                    <ManagerDetails standing={standing}/>
                             </Route>
-                        </Switch>
-                    </div>
+                        )}
+                        <Route path='/'>
+                                <MobileManagerSelector standings={standings} 
+                                        selectedManagerName="Select Manager"/>
+                                <h4 className="d-none d-sm-block">Manager</h4>
+                        </Route>
+                    </Switch>
+                </div>
             </div>
         </div>
     );

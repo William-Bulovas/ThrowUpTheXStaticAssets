@@ -724,18 +724,23 @@ export const MatchupsApiFetchParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        matchups(managerIdA: string, managerIdB: string, options: any = {}): FetchArgs {
+        matchups(managerIdA: string, managerIdB?: string, options: any = {}): FetchArgs {
             // verify required parameter 'managerIdA' is not null or undefined
             if (managerIdA === null || managerIdA === undefined) {
                 throw new RequiredError('managerIdA','Required parameter managerIdA was null or undefined when calling matchups.');
             }
-            // verify required parameter 'managerIdB' is not null or undefined
-            if (managerIdB === null || managerIdB === undefined) {
-                throw new RequiredError('managerIdB','Required parameter managerIdB was null or undefined when calling matchups.');
+
+            let localVarPath: string;
+
+            if(managerIdB === null || managerIdB === undefined) {
+                localVarPath = `/matchup/{managerIdA}`
+                    .replace(`{${"managerIdA"}}`, encodeURIComponent(String(managerIdA)));
+            } else {
+                localVarPath = `/matchup/{managerIdA}/{managerIdB}`
+                    .replace(`{${"managerIdA"}}`, encodeURIComponent(String(managerIdA)))
+                    .replace(`{${"managerIdB"}}`, encodeURIComponent(String(managerIdB)));
             }
-            const localVarPath = `/matchup/{managerIdA}/{managerIdB}`
-                .replace(`{${"managerIdA"}}`, encodeURIComponent(String(managerIdA)))
-                .replace(`{${"managerIdB"}}`, encodeURIComponent(String(managerIdB)));
+
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -790,7 +795,7 @@ export const MatchupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        matchups(managerIdA: string, managerIdB: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<MatchupOverview>> {
+        matchups(managerIdA: string, managerIdB?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<MatchupOverview>> {
             const localVarFetchArgs = MatchupsApiFetchParamCreator(configuration).matchups(managerIdA, managerIdB, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {

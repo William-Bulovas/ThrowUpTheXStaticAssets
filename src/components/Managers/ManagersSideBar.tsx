@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, NavLink, useRouteMatch } from 'react-router-dom';
 import { HistoricalStanding } from '../../client';
 
 interface Props {
@@ -15,9 +15,9 @@ export const ManagersSideBar = (props: Props) => {
                 props.overallStandings.map(
                     standing => 
                         <li className='nav-item'>
-                            <Link to={url + '/' + standing.manager} className='nav-link'>
+                            <NavLink activeClassName="active" to={url + '/' + standing.managerId} className='nav-link'>
                                 {standing.manager}
-                            </Link>
+                            </NavLink>
                         </li>
                 )
             }

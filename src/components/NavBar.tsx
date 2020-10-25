@@ -1,34 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Navbar } from 'react-bootstrap';
+import { Link, NavLink } from 'react-router-dom';
 
 export const NavBar = () => {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Link to="/" className="navbar-brand ml-3" > Throw Up The X</Link>
 
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span className="navbar-toggler-icon"></span>
-            </button>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-            <div className="collapse navbar-collapse" id="navbarNav">
+            <Navbar.Collapse id="responsive-navbar-nav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link"><span className="sr-only">(current)</span></a>
+                    <li className="nav-item">
+                        <NavLink to="/Historical" activeClassName="active" className="nav-link">Historical Standings</NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link to="/" className="nav-link">Historical Standings</Link>
+                        <NavLink to="/Managers" activeClassName="active" className="nav-link">Managers</NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link to="Managers" className="nav-link">Managers</Link>
+                        <NavLink to="/Matchups" activeClassName="active" className="nav-link">Matchups</NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link to="Matchups" className="nav-link">Matchups</Link>
+                        <NavLink to="/Standings" activeClassName="active" className="nav-link">Standings</NavLink>
                     </li>
                     <li className="nav-item">
-                        <Link to="Standings" className="nav-link">Standings</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="Drafts" className="nav-link">Drafts</Link>
+                        <NavLink to="/Drafts" activeClassName="active" className="nav-link">Drafts</NavLink>
                     </li>
                 </ul>
 
@@ -37,7 +33,7 @@ export const NavBar = () => {
                         <Link to="About" className="nav-link">About</Link>
                     </li>
                 </ul>
-            </div>        
-        </nav>
+            </Navbar.Collapse>
+        </Navbar>
     )
 }

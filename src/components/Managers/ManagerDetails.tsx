@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { StandingsApiFp, HistoricalStanding, Standing, DraftResultsApiFp, DraftResult } from '../../client';
+import {ManagerMatchupRow} from './ManagerMatchupRow';
+import { StandingsApiFp, HistoricalStanding, Standing, DraftResultsApiFp, DraftResult, MatchupsApiFp, MatchupOverview } from '../../client';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 interface Props {
     standing: HistoricalStanding
@@ -9,7 +11,10 @@ interface Props {
 export const ManagerDetails = (props: Props) => {
     const [seasonResults, setSeasonResults] = useState<Standing[]>([]);
     const [draftResults, setDraftResults] = useState<DraftResult[]>([]);
+    const [matchups, setMatchups] = useState<MatchupOverview[]>([]);
     const [draftSeason, setDraftSeason] = useState(0);
+    const [matchupSeason, setMatchupSeason] = useState('');
+    const { path, url } = useRouteMatch();
 
     useEffect(() => {
         StandingsApiFp().standingsForManager(props.standing.managerId)()
@@ -24,9 +29,17 @@ export const ManagerDetails = (props: Props) => {
             });
     }, [props.standing]);
 
+    useEffect(() => {
+        MatchupsApiFp().matchups(props.standing.managerId)()
+            .then(matchups => {
+                setMatchups(matchups)
+                setMatchupSeason(matchups[0].year)
+            });
+    }, [props.standing]);
+
     return (
         <div>
-            <h3 className="mb-5">{props.standing.manager}</h3>
+            <h3 className="mb-5 d-none d-sm-block">{props.standing.manager}</h3>
 
             <h5>Stats</h5>
             <table className="table table-striped table-dark table-hover table-responsive-sm mb-0">
@@ -152,10 +165,49 @@ export const ManagerDetails = (props: Props) => {
                     )}
                 </tbody>
             </table>
+
+            <h5>Matchups</h5>
+
+            <div className="mb-3 d-flex justify-content-end">
+                <Dropdown className="mr-3">
+                    <Dropdown.Toggle id="dropdown-basic">
+                        {matchupSeason}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        {matchups.map(result => result.year)
+                            .filter(onlyUnique)
+                            .map(season => 
+                                <Dropdown.Item onClick={() => setMatchupSeason(season)}>{season}</Dropdown.Item>
+                        )}
+                    </Dropdown.Menu>
+                </Dropdown>
+            </div>
+            <table className="table table-dark table-responsive-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Week</th>
+                        <th scope="col">Winner</th>
+                        <th scope="col">Points</th>
+                        <th scope="col">Opponent</th>
+                        <th scope="col">Opponent's Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { matchups
+                        .filter(matchup => matchup.year === matchupSeason)
+                        .sort(sortMatchups)
+                        .map(matchup => <ManagerMatchupRow matchup={matchup}/>)}
+                </tbody>
+            </table>
         </div>
     );
 }
 
-const onlyUnique = (value: number, index: number, self: number[]) => {
+const onlyUnique = (value: any, index: number, self: any[]) => {
     return self.indexOf(value) === index;
+}
+
+const sortMatchups = (matchup1: MatchupOverview, matchup2: MatchupOverview): number => {
+    return matchup1.week > matchup2.week ? 1 : matchup1.week < matchup2.week ? -1 : 0;
 }
