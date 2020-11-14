@@ -409,6 +409,26 @@ export interface Standing {
     year?: number;
 }
 
+/**
+ * 
+ * @export
+ * @interface MatchupRecord
+ */
+export interface MatchupRecord extends MatchupOverview {
+    /**
+     * 
+     * @type {string}
+     * @memberof MatchupRecord
+     */
+    recordManager?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MatchupRecord
+     */
+    recordPoints?: number;
+}
+
 
 /**
  * DraftResultsApi - fetch parameter creator
@@ -756,6 +776,64 @@ export const MatchupsApiFetchParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+                /**
+         * Find standings for a given year
+         * @summary Find standings for a year
+         * @param {'Highest' | 'Lowest'} type Manager id for the first selected player
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        matchupDiffRecord(type: 'Highest' | 'Lowest', options: any = {}): FetchArgs {
+            // verify required parameter 'type' is not null or undefined
+            if (type === null || type === undefined) {
+                throw new RequiredError('type','Required parameter type was null or undefined when calling matchupDiffRecord.');
+            }
+            const localVarPath = `/matchupRecordDifferential/{type}`
+                .replace(`{${"type"}}`, encodeURIComponent(String(type)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Find standings for a given year
+         * @summary Find standings for a year
+         * @param {'Highest' | 'Lowest'} type Manager id for the first selected player
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        matchupsRecord(type: 'Highest' | 'Lowest', options: any = {}): FetchArgs {
+            // verify required parameter 'type' is not null or undefined
+            if (type === null || type === undefined) {
+                throw new RequiredError('type','Required parameter type was null or undefined when calling matchupsRecord.');
+            }
+            const localVarPath = `/matchupRecord/{type}`
+                .replace(`{${"type"}}`, encodeURIComponent(String(type)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -807,6 +885,44 @@ export const MatchupsApiFp = function(configuration?: Configuration) {
                 });
             };
         },
+                /**
+         * Find standings for a given year
+         * @summary Find standings for a year
+         * @param {'Highest' | 'Lowest'} type Manager id for the first selected player
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        matchupDiffRecord(type: 'Highest' | 'Lowest', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<MatchupOverview>> {
+            const localVarFetchArgs = MatchupsApiFetchParamCreator(configuration).matchupDiffRecord(type, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Find standings for a given year
+         * @summary Find standings for a year
+         * @param {'Highest' | 'Lowest'} type Manager id for the first selected player
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        matchupsRecord(type: 'Highest' | 'Lowest', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<MatchupRecord>> {
+            const localVarFetchArgs = MatchupsApiFetchParamCreator(configuration).matchupsRecord(type, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
     }
 };
 
@@ -840,6 +956,44 @@ export const MatchupsApiFactory = function (configuration?: Configuration, fetch
          */
         matchups(managerIdA: string, managerIdB: string, options?: any) {
             return MatchupsApiFp(configuration).matchups(managerIdA, managerIdB, options)(fetch, basePath);
+        },
+                /**
+         * Find standings for a given year
+         * @summary Find standings for a year
+         * @param {'Highest' | 'Lowest'} type Manager id for the first selected player
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        matchupDiffRecord(type: 'Highest' | 'Lowest', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<MatchupOverview>> {
+            const localVarFetchArgs = MatchupsApiFetchParamCreator(configuration).matchupDiffRecord(type, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Find standings for a given year
+         * @summary Find standings for a year
+         * @param {'Highest' | 'Lowest'} type Manager id for the first selected player
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        matchupsRecord(type: 'Highest' | 'Lowest', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<MatchupRecord>> {
+            const localVarFetchArgs = MatchupsApiFetchParamCreator(configuration).matchupsRecord(type, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
         },
     };
 };
@@ -877,6 +1031,28 @@ export class MatchupsApi extends BaseAPI {
      */
     public matchups(managerIdA: string, managerIdB: string, options?: any) {
         return MatchupsApiFp(this.configuration).matchups(managerIdA, managerIdB, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Find standings for a given year
+     * @summary Find standings for a year
+     * @param {'Highest' | 'Lowest'} type Manager id for the first selected player
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MatchupsApi
+     */
+    public matchupDiffRecord(type: 'Highest' | 'Lowest', options?: any) {
+        return MatchupsApiFp(this.configuration).matchupDiffRecord(type, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Find standings for a given year
+     * @summary Find standings for a year
+     * @param {'Highest' | 'Lowest'} type Manager id for the first selected player
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MatchupsApi
+     */
+    public matchupsRecord(type: 'Highest' | 'Lowest', options?: any) {
+        return MatchupsApiFp(this.configuration).matchupsRecord(type, options)(this.fetch, this.basePath);
     }
 
 }

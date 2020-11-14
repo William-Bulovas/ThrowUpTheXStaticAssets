@@ -30,26 +30,9 @@ export const MatchupHistory = (props: Props) => {
     }
 
     const getRecord = (id: string) => {
-
         return matchupData.map(matchup=> matchup.winnerId)
             .filter(winnerId => winnerId === id)
             .length;
-    }
-
-    const getWeek = (matchup: MatchupOverview) => {
-        if (matchup.finals) {
-            return "Finals";
-        }
-
-        if (matchup.semi) {
-            return "Semi-Finals";
-        }
-
-        if (matchup.thirdPlaceGame) {
-            return "Consolation Finals";
-        }
-
-        return matchup.week;
     }
     
     return (

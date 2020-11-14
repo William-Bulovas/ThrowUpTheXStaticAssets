@@ -8,6 +8,8 @@ import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import { Standings } from './components/Standings';
 import { About } from './components/About';
 import { Managers } from './components/Managers/Managers';
+import { MatchupRecords } from './components/Record/MatchupRecords';
+import { Records } from './components/Record/Records';
 
 function App() {
   return (
@@ -31,6 +33,9 @@ function App() {
         </Route>
         <Route path="/About">
           <About/>
+        </Route>
+        <Route path="/Records">
+          <Records/>
         </Route>
         <Route path="/">
           <HistoricalStandings/>
