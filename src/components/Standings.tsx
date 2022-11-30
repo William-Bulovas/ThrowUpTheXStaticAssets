@@ -21,7 +21,7 @@ export const Standings = () => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    {["2015", "2016", "2017", "2018", "2019", "2020"].map(season => 
+                    {["2015", "2016", "2017", "2018", "2019", "2020", "2021"].map(season => 
                         <Dropdown.Item onClick={() => setSeason(season)}>{season}</Dropdown.Item>
                     )}
                 </Dropdown.Menu>
